@@ -10,4 +10,4 @@ struct PositionInt
 {
 	unsigned int lin, col;
 };
-#endif
+#endif  

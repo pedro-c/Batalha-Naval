@@ -20,8 +20,8 @@ public:
 	unsigned int getShipPositionCol() const;
 	unsigned int getShipPositionLin() const;
 	char getShipOrientation() const;
-	unsigned int getShipSize() const;
-	unsigned int getShipColor() const;
+	unsigned int getShipSize() const; 
+	unsigned int getShipColor() const; 
 	string getShipStatus() const;
 	PositionInt getShipPosition() const;
 	void setDefaultStatus();

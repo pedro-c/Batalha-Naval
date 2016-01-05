@@ -20,7 +20,7 @@ bool Ship::move(char direction, bool rotate, unsigned int lineMin, unsigned int 
 {
 	bool flag = true;
 	int line = position.lin;
-	int column = position.col;
+	int column = position.col;  
 	char orientation2 = orientation;
 
 
@@ -142,20 +142,29 @@ bool Ship::moveRand(unsigned int lineMin, unsigned int columnMin, unsigned int l
 	//testa se o barco está dentro do tabuleiro
 	if (orientationteste == 'V')
 	{
-		if ((colteste <= (columnMax - 1)) && linteste >= 0 && colteste >= 0 && (linteste + getShipSize()) <= (lineMax - 1))
+		if ((colteste <(columnMax)) && linteste >= 0 && colteste >= 0 && (linteste + getShipSize()) < (lineMax))
 		{
 			flag = true;
 		}
-		else { flag = false; }
+		else
+		{
+			flag = false;
+			return false;
+		}
+
 
 	}
 	else if (orientationteste == 'H')
 	{
-		if ((linteste <= (lineMax - 1)) && linteste >= 0 && colteste >= 0 && (colteste + getShipSize()) <= (columnMax - 1))
+		if ((linteste < (lineMax)) && linteste >= 0 && colteste >= 0 && (colteste + getShipSize()) <(columnMax))
 		{
 			flag = true;
 		}
-		else { flag = false; }
+		else
+		{
+			flag = false;
+			return false;
+		}
 	}
 
 	//testa se o barco interseta outros barcos
@@ -163,44 +172,45 @@ bool Ship::moveRand(unsigned int lineMin, unsigned int columnMin, unsigned int l
 	{
 		for (int z = 0; z < getShipSize(); z++)
 		{
-			if (board[linteste + z][colteste] == -1 || board[linteste + z][colteste] == shipIndex)
+			if (board[linteste + z][colteste] == -1)
 			{
 				flag = true;
 			}
-			else { flag = false; }
+			else if (board[linteste + z][colteste] == shipIndex)
+			{
+				flag = true;
+			}
+			else
+			{
+				flag = false;
+				return false;
+			}
 		}
 	}
 	else if (flag == true && orientationteste == 'H')
 	{
 		for (int z = 0; z < getShipSize(); z++)
 		{
-			if (board[linteste][colteste + z] == -1 || board[linteste][colteste + z] == shipIndex)
+			if (board[linteste][colteste + z] == -1)
 			{
 				flag = true;
 			}
-			else { flag = false; }
+			else if (board[linteste][colteste + z] == shipIndex)
+			{
+				flag = true;
+			}
+			else
+			{
+				flag = false;
+				return false;
+			}
 		}
 	}
+
 
 	//caso seja possivel mover o barco limpa a antiga posição do barco e define uma nova
 	if (flag == true)
 	{
-		//limpa a posiçao inicial do board
-		if (orientation == 'V')
-		{
-			for (int z = 0; z < getShipSize(); z++)
-			{
-				board[position.lin + z][position.col] = -1;
-			}
-		}
-		else if (orientation == 'H')
-		{
-			for (int z = 0; z < getShipSize(); z++)
-			{
-				board[position.lin][position.col + z] = -1;
-			}
-		}
-
 		//Coloca o barco na nova posição
 		switch (var)
 		{
@@ -218,13 +228,13 @@ bool Ship::moveRand(unsigned int lineMin, unsigned int columnMin, unsigned int l
 	return flag;
 }
 
-bool Ship::attack(size_t partNumber)
+bool Ship::attack(size_t partNumber) 
 {
 	if (partNumber > (size - 1))
 	{
 		return false;
 	}
-	else if (partNumber < (size - 1))
+	else if (partNumber <= (size - 1))
 	{
 		if (isupper(status[partNumber]))
 		{
@@ -234,17 +244,17 @@ bool Ship::attack(size_t partNumber)
 	}
 }
 
-bool Ship::isDestroyed() const
+bool Ship::isDestroyed() const // Verifica se o navio foi destruido
 {
 	int i = 0;
 	bool verDestroyed = false;
 	for (int j = 0; j < status.size(); j++)
 	{
-		if (islower(status[j]))
+		if (islower(status[j])) // Caso seja uma letra pequena conta no i
 			i++;
 	}
-		if (i>(size / 2))
-			verDestroyed = false;
+		if (i>=(size / 2))
+			verDestroyed = true;
 	return verDestroyed;
 }
 

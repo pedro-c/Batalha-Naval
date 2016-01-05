@@ -16,8 +16,8 @@ public:
 	void attackBoard(const Bomb &b); // "receives" a bomb from the opponent;
 	// updates own board taking into account the damages
 	// caused by the bomb; BEFORE THAT… moves the ships
-	bool playerLost();
-	int FleetArea();
+	bool playerLost(); 
+	int FleetArea(); 
 	int BoardArea();
 private:
 	string name; // name of the player

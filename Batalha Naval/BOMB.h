@@ -10,8 +10,8 @@ public:
 	void setValues(char linha, char coluna);
 	// OTHER METHODS, if necessary
 	// ...
-	void show() const;
+	void show() const; 
 private:
 	char targetLine, targetColumn;
 };
-#endif
+#endif 

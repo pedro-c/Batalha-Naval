@@ -7,8 +7,8 @@
 #include "STRUCTS.h"
 #include "COLORS.h"
 
-using namespace std;
-
+using namespace std; 
+ 
 Board::Board(const string &filename)
 {
 	int x, y;
@@ -69,7 +69,7 @@ bool Board::putShip(const Ship &s)
 	for (size_t i = 0; i < ships.size(); i++) // Ciclo para verificar o indice do navio no vector ships
 	{
 		if (s.getShipPositionLin() == ships[i].getShipPositionLin() && s.getShipPositionCol() == ships[i].getShipPositionCol()
-			&& s.getShipSymbol()==ships[i].getShipSymbol())
+			&& s.getShipSymbol() == ships[i].getShipSymbol())
 		{
 			k = i;
 		}
@@ -80,7 +80,7 @@ bool Board::putShip(const Ship &s)
 	size_t j = y;
 	if (pos == 'H' || pos == 'h')
 	{
-		if ((xi + s.getShipSize()) <= board[0].size()) //Se couber no tabuleiro
+		if (xi >= 0 && (xi + s.getShipSize()) <= board[0].size()) //Se couber no tabuleiro
 		{
 			for (i; i < (xi + s.getShipSize()); i++) //Verificar se nao interseta nenhum navio
 			{
@@ -107,7 +107,7 @@ bool Board::putShip(const Ship &s)
 	}
 	else if (pos == 'V' || pos == 'v')
 	{
-		if ((j + s.getShipSize()) <= board.size()) //Se couber no tabuleiro
+		if (yi >= 0 && (j + s.getShipSize()) <= board.size()) //Se couber no tabuleiro
 		{
 			for (j; j < (yi + s.getShipSize()); j++) //Verificar se nao interseta nenhum navio
 			{
@@ -145,13 +145,26 @@ void Board::moveShips()
 		{
 			if (ships[i].isDestroyed() == true)  //se o barco estiver destroido nao é movido
 			{
-
+				flag = true;
 			}
 			else {
-				flag = ships[i].moveRand(0, 0, board.size(), board[0].size(), board);
-				if (flag)
+				bool flag1 = ships[i].moveRand(0, 0, board.size(), board[0].size(), board);
+
+				if (flag1)
 				{
-					putShip(ships[i]);
+					for (int z = 0; z < board.size(); z++)
+					{
+						for (int w = 0; w < board[0].size(); w++)
+						{
+							board[z][w] = -1;
+						}
+						
+					}
+					for (int e = 0; e < ships.size(); e++)
+					{
+						putShip(ships[e]);
+					}
+					flag = true;
 				}
 				else
 				{
@@ -167,9 +180,9 @@ int Board::getShipStatus(int ind,int linha,int coluna) // Para verificar que pos
 {
 	int Navi = 0;// Valor que vai ser returnado com a posiçao do navio atingido
 	int Navic = 0;
-	for (int i = 0; i < numLines; i++)
+	for (size_t i = 0; i < numLines; i++)
 	{
-		for (int j = 0; j < numColumns; j++)
+		for (size_t j = 0; j < numColumns; j++)
 		{
 			if (i == linha && j == coluna)
 				Navi = Navic;
@@ -193,11 +206,28 @@ bool Board::attack(const Bomb &b)
 		}
 		else
 		{
-			cout << "Acertou!" << endl;
-			int i = board[linha][coluna];
-			int partNum=getShipStatus(i,linha,coluna);
-			ships[i].attack(partNum);
-			return true;
+			int DeltaI = linha - ships[board[linha][coluna]].getShipPositionLin(); // Verificar se a parte atingida e uma letra pequena
+			if (islower(ships[board[linha][coluna]].getShipStatus()[DeltaI])) // Caso seja uma letra pequena
+			{
+				cout << "Acertou numa parte do navio com o simbolo ";
+				setcolor(ships[board[linha][coluna]].getShipColor(), 0);
+				cout << ships[board[linha][coluna]].getShipSymbol();
+				setcolor(15, 0);
+				cout << " ja antes atingida!" << endl;
+				return false;
+			}
+			else
+			{
+				cout << "Acertou no barco com o simbolo ";
+				setcolor(ships[board[linha][coluna]].getShipColor(), 0);
+				cout << ships[board[linha][coluna]].getShipSymbol();
+				setcolor(15, 0);
+				cout << " ." << endl;
+				int i = board[linha][coluna];
+				int partNum = getShipStatus(i, linha, coluna);
+				ships[i].attack(partNum);
+				return true;
+			}
 		}
 	}
 	else
@@ -245,6 +275,7 @@ void Board::display() const
 		}
 		setcolor(15, 0);
 	}
+	cout << endl;
 }
 
 void Board::show() const // Devolve o tabuleiro com os valores
@@ -299,5 +330,63 @@ int Board::FleetArea()
 
 int Board::BoardArea()
 {
-	return (board.size()*board[0].size());
+	int x = (board.size()*board[0].size());
+	return x;
+}
+
+Ship Board::ReturnShip(size_t ind) const
+{
+	return ships[ind];
+}
+
+int Board::GetBoardPos(int lin, int col) const
+{
+	return board[lin][col];
+}
+
+ostream &operator<<(ostream& out, const Board board)
+{
+	size_t linhas = board.getNumLines();
+	size_t colunas = board.getNumColumns();
+	out << " ";
+	for (size_t i = 0; i < board.getNumColumns(); i++)
+		out << setw(3) << (char)(97 + i);
+	out << endl;
+	for (size_t i = 0; i < linhas; i++)
+	{
+		{
+			out << (char)(65 + i);
+			for (size_t j = 0; j < colunas; j++)
+			{
+				int posicao = board.GetBoardPos(i, j);
+				if (posicao == -1) // Se a percela tiver valor -1 mostra .
+				{
+					setcolor(1, 7);
+					out << setw(3) << '.';
+				}
+				else if (board.ReturnShip(posicao).getShipOrientation() == 'H') // Verifica se o barco correspondente ao indice esta na horizontal
+				{
+					if (i == board.ReturnShip(posicao).getShipPositionLin() && j == board.ReturnShip(posicao).getShipPositionCol()) // Verifica se corresponde a primeira posição dese navio
+					{                                                                                                 // Se corresponder escreve se nao nao faz nada
+						for (size_t k = 0; k < board.ReturnShip(posicao).getShipSize(); k++)
+						{
+							int PosA = board.GetBoardPos(i, j + k);
+							setcolor(board.ReturnShip(posicao).getShipColor(), 7);
+							out << setw(3) << board.ReturnShip(PosA).getShipStatus()[k];
+						}
+					}
+				}
+				else if (board.ReturnShip(posicao).getShipOrientation() == 'V') // Verifica se o barco esta na vertical
+				{
+					int deltalin = i - board.ReturnShip(posicao).getShipPositionLin(); // Calcula o indice correspondente a status
+					setcolor(board.ReturnShip(posicao).getShipColor(), 7);
+					out << setw(3) << board.ReturnShip(posicao).getShipStatus()[deltalin];
+				}
+			}
+			out << "  " << "\n";
+		}
+		setcolor(15, 0);
+	}
+	out << endl;
+	return out;
 }

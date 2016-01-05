@@ -7,10 +7,11 @@
 #include "BOMB.h"
 
 class Board
-{
+{ 
 public:
+	friend ostream &operator<<(ostream& out, const Board board);
 	Board(const string &filename); // loads board from file 'filename'
-	bool putShip(const Ship &s); // adds ship to the board, if possible
+	bool putShip(const Ship &s); // adds ship to the board, if possible 
 	void moveShips(); // tries to randmonly move all the ships of the fleet
 	bool attack(const Bomb &b);
 	void display() const; // displays the colored board during the game
@@ -21,6 +22,8 @@ public:
 	bool verifyFleet();
 	int FleetArea();
 	int BoardArea();
+	Ship ReturnShip(size_t ind) const;
+	int GetBoardPos(int lin, int col) const;
 private:
 	int numLines, numColumns; // redundant info …
 	vector<Ship> ships; // ships that are placed on the board

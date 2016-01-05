@@ -33,17 +33,17 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BOARD.cpp">
-      <Filter>Header Files\BOARD</Filter>
-    </ClCompile>
-    <ClCompile Include="BOMB.cpp">
-      <Filter>Header Files\BOMB</Filter>
-    </ClCompile>
     <ClCompile Include="SHIP.cpp">
       <Filter>Header Files\SHIP</Filter>
     </ClCompile>
     <ClCompile Include="PLAYER.cpp">
       <Filter>Header Files\PLAYER</Filter>
+    </ClCompile>
+    <ClCompile Include="BOMB.cpp">
+      <Filter>Header Files\BOMB</Filter>
+    </ClCompile>
+    <ClCompile Include="BOARD.cpp">
+      <Filter>Header Files\BOARD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

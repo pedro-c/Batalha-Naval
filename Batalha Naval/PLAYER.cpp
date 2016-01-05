@@ -15,8 +15,8 @@ void Player::showBoard() const
 {
 	board.display();
 }
-
-
+ 
+ 
 
 Bomb Player::getBomb() const
 {
@@ -25,17 +25,17 @@ Bomb Player::getBomb() const
 	char y;
 
 	PositionChar coordenadas;
-	cout << "Indique as coordenadas da bomba(LINHA|coluna) ?" << endl;
+	cout << "Indique as coordenadas da bomba(A..." << (char)(64+board.getNumLines()) << "|a..." << (char)(96+board.getNumColumns()) << ") ?" << endl;
 	while (flag)
 	{
+		fflush(stdin);
 		cin >> x >> y;
-		if (cin.fail())
+		if (x>=65 && x<=90 && y>=97 && y<=122)
+			flag = false;
+		else
 		{
-			cout << "Coordenadas invalidas!";
-			flag = true;
-
+			cout << "Coordenadas invalidas! Indique novamente: ";
 		}
-		else{ flag = false; }
 		
 	}
 	coordenadas.lin = x;
@@ -51,7 +51,7 @@ void Player::attackBoard(const Bomb &b)
 	
 }
 
-bool Player::playerLost()
+bool Player::playerLost() // Verifica se o jogador perdeu
 {
 	bool flag = false;
 	if (board.verifyFleet() == true)
@@ -69,5 +69,5 @@ int Player::FleetArea()
 
 int Player::BoardArea()
 {
-	return BoardArea();
+	return (board.BoardArea());
 }

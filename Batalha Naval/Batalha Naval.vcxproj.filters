@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\BOARD">
+      <UniqueIdentifier>{9bc44802-82bb-4733-946f-8dc255ffe5bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BOMB">
+      <UniqueIdentifier>{f86915ec-df53-4d70-9ecb-4cb8cb518854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SHIP">
+      <UniqueIdentifier>{b016e3e5-e815-44d0-a7ff-6deb5c59d917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PLAYER">
+      <UniqueIdentifier>{96b08e6a-396a-408f-8974-00c7c687a385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\OTHER">
+      <UniqueIdentifier>{21e2a97d-4230-44b5-8218-68937e163c81}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOARD.cpp">
+      <Filter>Header Files\BOARD</Filter>
+    </ClCompile>
+    <ClCompile Include="BOMB.cpp">
+      <Filter>Header Files\BOMB</Filter>
+    </ClCompile>
+    <ClCompile Include="SHIP.cpp">
+      <Filter>Header Files\SHIP</Filter>
+    </ClCompile>
+    <ClCompile Include="PLAYER.cpp">
+      <Filter>Header Files\PLAYER</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BOARD.h">
+      <Filter>Header Files\BOARD</Filter>
+    </ClInclude>
+    <ClInclude Include="BOMB.h">
+      <Filter>Header Files\BOMB</Filter>
+    </ClInclude>
+    <ClInclude Include="SHIP.h">
+      <Filter>Header Files\SHIP</Filter>
+    </ClInclude>
+    <ClInclude Include="PLAYER.h">
+      <Filter>Header Files\PLAYER</Filter>
+    </ClInclude>
+    <ClInclude Include="STRUCTS.h">
+      <Filter>Header Files\OTHER</Filter>
+    </ClInclude>
+    <ClInclude Include="COLORS.h">
+      <Filter>Header Files\OTHER</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
